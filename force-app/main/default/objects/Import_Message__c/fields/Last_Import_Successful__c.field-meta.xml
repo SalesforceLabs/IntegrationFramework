@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Last_Import_Successful__c</fullName>
+    <businessStatus>Active</businessStatus>
+    <description>This field displays true if the last processing of the import message was successful.</description>
+    <externalId>false</externalId>
+    <formula>If (Log_Last_Start_DateTime__c =  Log_Last_Successful_DateTime__c, true, false)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Last Import Successful</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

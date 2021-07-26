@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Import_Finished_DateTime__c</fullName>
+    <businessStatus>Active</businessStatus>
+    <description>The date time that the processing of the import message finished.</description>
+    <externalId>false</externalId>
+    <label>Import Finished DateTime</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>DateTime</type>
+</CustomField>
