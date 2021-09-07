@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>API_URL__c</fullName>
+    <description>Defines the API URL that can called by an external application.
+The format is the defined base URL for the Apex REST API (for example /apigateway/v1/) + a specific destination like import.
+Put together the value would be: /apigateway/v1/import</description>
+    <externalId>false</externalId>
+    <fieldManageability>SubscriberControlled</fieldManageability>
+    <label>API URL</label>
+    <length>255</length>
+    <required>true</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

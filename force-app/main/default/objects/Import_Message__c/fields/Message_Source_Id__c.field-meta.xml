@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Message_Source_Id__c</fullName>
+    <businessStatus>Active</businessStatus>
+    <caseSensitive>true</caseSensitive>
+    <description>This is an identifier (normally some kind of GUID) from the source system that can link the message in Salesforce to a message in the source system</description>
+    <externalId>true</externalId>
+    <label>Message Source Id</label>
+    <length>150</length>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>true</unique>
+</CustomField>

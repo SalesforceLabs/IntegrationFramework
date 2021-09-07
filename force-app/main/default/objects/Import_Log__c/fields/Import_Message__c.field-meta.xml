@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Import_Message__c</fullName>
+    <businessStatus>Active</businessStatus>
+    <description>This field links to Import_Message__c where this Import_Log__c is for.</description>
+    <externalId>false</externalId>
+    <label>Import</label>
+    <referenceTo>Import_Message__c</referenceTo>
+    <relationshipLabel>Import Logs</relationshipLabel>
+    <relationshipName>Import_Logs</relationshipName>
+    <relationshipOrder>0</relationshipOrder>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <trackTrending>false</trackTrending>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>

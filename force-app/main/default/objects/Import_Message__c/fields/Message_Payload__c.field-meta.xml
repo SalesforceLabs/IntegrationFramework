@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Message_Payload__c</fullName>
+    <businessStatus>Active</businessStatus>
+    <description>The payload contains the actual data that will be loaded into Salesforce objects and fields</description>
+    <externalId>false</externalId>
+    <label>Message Payload</label>
+    <length>131072</length>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>10</visibleLines>
+</CustomField>

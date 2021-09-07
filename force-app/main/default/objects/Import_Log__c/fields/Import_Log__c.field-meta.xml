@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Import_Log__c</fullName>
+    <businessStatus>Active</businessStatus>
+    <description>This field displays the log messages generated during the processing of the import message.</description>
+    <externalId>false</externalId>
+    <label>Import Log</label>
+    <length>32768</length>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>10</visibleLines>
+</CustomField>
