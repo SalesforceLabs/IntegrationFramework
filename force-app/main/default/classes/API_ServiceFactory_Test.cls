@@ -1,16 +1,16 @@
 @IsTest
 public class API_ServiceFactory_Test {
-        
+    
     // Test the response of a valid route
     @IsTest
     static void send_Valid_HTTPMethod_Request_Test(){
         RestRequest request = new RestRequest(); 
-        request.requestURI = '/apigateway/v1/import';
+        request.requestURI = '/IntServ/v1/import';
         request.httpMethod = 'POST';
         
         boolean exceptionThrown = false;
         try {
-            API_ServiceFactory.apiRoutings = Import_TestMetadataFactory.createTestRoutes();
+            API_ServiceFactory.apiRoutings = API_Route_Metadata_DataFactory_Test.createTestRoutes();
         	IAPI_Service importService = (IAPI_Service) API_ServiceFactory.createService(request);
         }
         catch (Import_Exceptions.API_Exception apiException){
@@ -28,7 +28,7 @@ public class API_ServiceFactory_Test {
         
         boolean exceptionThrown = false;
         try {
-            API_ServiceFactory.apiRoutings = Import_TestMetadataFactory.createTestRoutes();
+            API_ServiceFactory.apiRoutings = API_Route_Metadata_DataFactory_Test.createTestRoutes();
         	IAPI_Service importService = (IAPI_Service) API_ServiceFactory.createService(request); 
         }
         catch (Import_Exceptions.API_Exception apiException){

@@ -1,5 +1,5 @@
 @IsTest
-public class Import_TestPayloadDataFactory {
+public class Import_Payload_DataFactory_Test {
 	public static string jsonPayload = 
         '{' + 
             '"LeadFirstName": "Clark",' + 
@@ -11,7 +11,7 @@ public class Import_TestPayloadDataFactory {
         	'"Do_Not_Call_Me": true,' + 
         	'"NumberOf_Employees": 75,' + 
         	'"Revenue": "1000000.50",' + 
-        	'"Country": "DE",' + 
+        	'"Industries": [{"value": "Apparel"}],' + 
             '"Owner": {"name": "Jason", "LastUpdated": "2012-05-02T12:00:00", "LastUpdated2": "2012-05-03 12:00:00"},' + 
         	'"cases": [{"casenumber": "10", "Origin": "TOCONVERT"}, ' + 
                       '{"casenumber": "11", "Origin": "TOCONVERT"}]' + 
@@ -21,10 +21,10 @@ public class Import_TestPayloadDataFactory {
         '<message> ' + 
         '	<name>Clark</name> ' + 
         '	<lastname>Kent</lastname> ' + 
-		'   <Countries>' + 
-		'   	<Value>Netherlands</Value>' + 
-		'       <Value>Sweden</Value>' + 
-		'   </Countries>' +         
+        '	<NumberOf_Employees>75</NumberOf_Employees> ' + 
+		'   <Industries>' + 
+		'   	<Value>Apparel</Value>' + 
+		'   </Industries>' +         
         '   <cases> ' + 
         '   	<case> ' + 
         '   		<caseNumber>123</caseNumber>' + 

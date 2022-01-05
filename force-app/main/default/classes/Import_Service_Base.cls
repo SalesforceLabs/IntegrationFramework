@@ -28,6 +28,8 @@ public abstract class Import_Service_Base implements IAPI_Service {
                 importMessage.Message_Source_Id__c = (string) importMessageMap.get('Message_Source_Id__c');
                 importMessage.Message_Source_System__c = (string) importMessageMap.get('Message_Source_System__c');
                 importMessage.Message_Type__c = (string) importMessageMap.get('Message_Type__c');
+                importMessage.Message_URL__c = request.RequestURI;
+                importMessage.Message_HttpMethod__c = request.HTTPMethod;
                 insert importMessage;
                 
                 // Process the import record and return the log message with the result
@@ -127,6 +129,7 @@ public abstract class Import_Service_Base implements IAPI_Service {
                 // Save the subset of objects
 	        	Schema.DescribeSObjectResult[] descResult = Schema.describeSObjects(new String[]{mappingObject.Salesforce_Object__c});
     	    	Schema.SObjectField externalField = descResult[0].fields.getMap().get(mappingObject.Salesforce_External_Id_Field__c);
+
                 Database.UpsertResult[] objectSaveResult = Database.Upsert(subsetRecordsToSave, externalField, false); 
                 saveResults.addAll(objectSaveResult);
             }

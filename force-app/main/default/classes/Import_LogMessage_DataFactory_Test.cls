@@ -1,5 +1,5 @@
 @Istest
-public class Import_TestLogMessageDataFactory {
+public class Import_LogMessage_DataFactory_Test {
     
     // Create one log message for each import object
     // All log fields will get the status: logFileStatus

@@ -1,4 +1,4 @@
-public class Import_XML_Service extends Import_Service_Base {
+public with sharing class Import_XML_Service extends Import_Service_Base {
     
     // Import an XML file
     @TestVisible
@@ -8,8 +8,8 @@ public class Import_XML_Service extends Import_Service_Base {
         // Get all mappings for the import message and process the XML for each mapping object
         List<sObject> targetObjectsToSave = new List<sObject>();
         for (Mapping_Object__mdt mappingObject : Import_Mapping.getMappings(importMessage)){
-            // Get all objects from the xml based on the payload node.
-            // Normally 1 object is returned but with /cases/* an array of cases is returned
+            // Get all objects from the XML based on the payload node.
+            // The specified root node can be 1 object or a collection of objects  
             Dom.XmlNode[] xmlValues = xmlUtiltiy.find(mappingObject.Message_Payload_Node__c);
             // Transform each object based on the mapping objects 
             for (Dom.XmlNode xmlNode : xmlValues){
@@ -33,19 +33,34 @@ public class Import_XML_Service extends Import_Service_Base {
         // Loop through all the mappings for the target object
         for(Mapping_Field__mdt fieldMapping : mappingObject.Mapping_Fields__r){
             Dom.XmlNode[] nodes = xmlUtiltiy.find(xmlNode, fieldMapping.Message_Payload_Node__c);
-            // If a node was found (only 1 or none should be found)
-            if (nodes.size() > 0){  
-            	string xmlValue = xmlUtiltiy.getText(xmlNode, fieldMapping.Message_Payload_Node__c);    
-				// Convert the value to the correct type
-            	Object typedValue = Import_Mapping_Utility.convertToSalesforceFieldType(targetSalesforceObjectType, fieldMapping, xmlValue);
+            // Only 1 or none should be found. Otherwise goto the next node
+            if (nodes.size() != 1){ 
+                continue;
+            }
+            
+            // If not a collection then transform the single field
+            if (!fieldMapping.IntServ__Is_Collection__c){
+                string xmlValue = xmlUtiltiy.getText(xmlNode, fieldMapping.Message_Payload_Node__c);    
+                // Convert the value to the correct type
+                Object typedValue = Import_Mapping_Utility.convertToSalesforceFieldType(targetSalesforceObjectType, fieldMapping, xmlValue);
                 targetSalesforceObjectInstance.put(fieldMapping.Salesforce_Field__c, typedValue); 
             }
-                
-            // Is_Collection__c 
-            // Transformation_Classname__c 
+            else { // the node contains a list of value
+                String collectionValues = '';  
+                // Get all value elements from the node
+                Dom.XmlNode[] xmlValueNodes = xmlNode.getChildren();                
+                for (Dom.XmlNode xmlValueNode : nodes[0].getChildren()){
+                    if (xmlValueNode.getName() == 'Value'){
+                        collectionValues += String.isNotBlank(collectionValues) ? ';' : '';
+                        collectionValues += xmlValueNode.getText();                                
+                    }
+                }
+				targetSalesforceObjectInstance.put(fieldMapping.Salesforce_Field__c, collectionValues);                 
+            }
         }
         
-        // If no field have changed on the object Then return null
+        // If nothing has been updated on the object then return null 
+        // so that the unchanged object is not added to the list of objects that will be saved.
         if (targetSalesforceObjectInstance == targetSalesforceObjectType.newSObject()){
             return null;
         }

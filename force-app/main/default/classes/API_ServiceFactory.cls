@@ -1,14 +1,12 @@
-public class API_ServiceFactory {
-    
-    private static final string baseUrlMapping = '/apigateway/v1/';
+public with sharing class API_ServiceFactory {
     
     @testVisible 
     private static List<API_Routing__mdt> apiRoutings{
         get{ 
             if(apiRoutings == NULL){ 
                 apiRoutings = [SELECT API_URL__c, Service_Classname__c, Http_Method__c 
-                              FROM API_Routing__mdt 
-                              WHERE Active__c = true]; 
+                               FROM API_Routing__mdt 
+                               WHERE Active__c = true]; 
             } 
             return apiRoutings; 
 		} 

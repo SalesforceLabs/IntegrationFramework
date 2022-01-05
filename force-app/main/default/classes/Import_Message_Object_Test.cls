@@ -6,8 +6,8 @@ public class Import_Message_Object_Test {
 	@IsTest
     static void last_Import_Successful_Test() {
         // Setup test data
-        List<Import_Message__c> importObjects = Import_TestMessageDataFactory.create_ImportObject(Import_TestPayloadDataFactory.xmlPayload);
-        Import_TestLogMessageDataFactory.create_one_ImportLogObject(importObjects, true);
+        List<Import_Message__c> importObjects = Import_ImportMessage_DataFactory_Test.create_ImportObject(Import_Payload_DataFactory_Test.xmlPayload);
+        Import_LogMessage_DataFactory_Test.create_one_ImportLogObject(importObjects, true);
         
         // Get the import objects to get the correct value for the formula fields
         importObjects = [SELECT Id, IntServ__Last_Import_Successful__c FROM Import_Message__c];
@@ -19,8 +19,8 @@ public class Import_Message_Object_Test {
 	@IsTest
     static void last_Import_Unsuccessful_Test() {
         // Setup test data
-        List<Import_Message__c> importObjects = Import_TestMessageDataFactory.create_ImportObject(Import_TestPayloadDataFactory.xmlPayload);
-        Import_TestLogMessageDataFactory.create_one_ImportLogObject(importObjects, false);
+        List<Import_Message__c> importObjects = Import_ImportMessage_DataFactory_Test.create_ImportObject(Import_Payload_DataFactory_Test.xmlPayload);
+        Import_LogMessage_DataFactory_Test.create_one_ImportLogObject(importObjects, false);
         
         // Get the import objects to get the correct value for the formula fields
         importObjects = [SELECT Id, IntServ__Last_Import_Successful__c FROM Import_Message__c];
@@ -32,8 +32,8 @@ public class Import_Message_Object_Test {
 	@IsTest
     static void multiple_with_last_Import_Successful_Test() {
         // Setup test data
-        List<Import_Message__c> importObjects = Import_TestMessageDataFactory.create_ImportObject(Import_TestPayloadDataFactory.xmlPayload);
-        Import_TestLogMessageDataFactory.create_two_ImportLogObject(importObjects, true);
+        List<Import_Message__c> importObjects = Import_ImportMessage_DataFactory_Test.create_ImportObject(Import_Payload_DataFactory_Test.xmlPayload);
+        Import_LogMessage_DataFactory_Test.create_two_ImportLogObject(importObjects, true);
         
         // Get the import objects to get the correct value for the formula fields
         importObjects = [SELECT Id, IntServ__Last_Import_Successful__c FROM Import_Message__c];
@@ -45,8 +45,8 @@ public class Import_Message_Object_Test {
 	@IsTest
     static void multiple_with_last_Import_Unsuccessful_Test() {
         // Setup test data
-        List<Import_Message__c> importObjects = Import_TestMessageDataFactory.create_ImportObject(Import_TestPayloadDataFactory.xmlPayload);
-        Import_TestLogMessageDataFactory.create_two_ImportLogObject(importObjects, false);
+        List<Import_Message__c> importObjects = Import_ImportMessage_DataFactory_Test.create_ImportObject(Import_Payload_DataFactory_Test.xmlPayload);
+        Import_LogMessage_DataFactory_Test.create_two_ImportLogObject(importObjects, false);
         
         // Get the import objects to get the correct value for the formula fields
         importObjects = [SELECT Id, IntServ__Last_Import_Successful__c FROM Import_Message__c];

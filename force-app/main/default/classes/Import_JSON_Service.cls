@@ -1,4 +1,4 @@
-public class Import_JSON_Service extends Import_Service_Base {
+public with sharing class Import_JSON_Service extends Import_Service_Base {
     
     // Import a JSON file
     @TestVisible
@@ -9,7 +9,7 @@ public class Import_JSON_Service extends Import_Service_Base {
         List<sObject> targetObjectsToSave = new List<sObject>();
         for (Mapping_Object__mdt mappingObject : Import_Mapping.getMappings(importMessage)){
             // Get all objects from the JSON based on the payload node.
-            // Normally 1 object is returned but with root.cases an array of cases is returned  
+            // The specified root node can be 1 object or a collection of objects  
             List<Object> jsonObjects = find(mainJSONObject, mappingObject.Message_Payload_Node__c);
             // Transform each object based on the mapping objects
             for (Object jsonObject : jsonObjects){
@@ -34,17 +34,36 @@ public class Import_JSON_Service extends Import_Service_Base {
         // Loop through all the field mappings
         for(Mapping_Field__mdt fieldMapping : mappingObject.Mapping_Fields__r){
             Object value = jsonObject.get(fieldMapping.Message_Payload_Node__c);
-			// Convert the value to the correct type
-			Object typedValue = Import_Mapping_Utility.convertToSalesforceFieldType(targetSalesforceObjectType, fieldMapping, value);
-            targetSalesforceObjectInstance.put(fieldMapping.Salesforce_Field__c, typedValue); 
-        
-            // Is_Collection__c 
-        	// Transformation_Classname__c 
+            // if the key is not found, the map returns null that value does not need to be converted
+            if (value == null){
+                continue;
+            }
+            
+            // If not a collection then transform the single field
+            if (!fieldMapping.IntServ__Is_Collection__c){
+                // Convert the value to the correct type
+                Object typedValue = Import_Mapping_Utility.convertToSalesforceFieldType(targetSalesforceObjectType, fieldMapping, value);
+                targetSalesforceObjectInstance.put(fieldMapping.Salesforce_Field__c, typedValue);                                     
+            }
+            else { // the node contains a list of value
+                String collectionValues = '';  
+                List<Object> valueObjects = (List<Object>)jsonObject.get(fieldMapping.Message_Payload_Node__c);
+                // Get all value elements
+                for (Object valueObject : valueObjects){
+                    Map<String, Object> valueObjectMap = (Map<String, Object>)valueObject;
+
+                    Object typedValue = Import_Mapping_Utility.convertToSalesforceFieldType(targetSalesforceObjectType, fieldMapping, valueObjectMap.get('value'));
+                    collectionValues += (collectionValues != '') ? ';' : '';
+                    collectionValues += typedValue;                                
+                }
+                targetSalesforceObjectInstance.put(fieldMapping.Salesforce_Field__c, collectionValues);                 
+            }
         }    
         
-        // If no field have changed on the object Then return null
+        // If nothing has been updated on the object then return null 
+        // so that the unchanged object is not added to the list of objects that will be saved.
         if (targetSalesforceObjectInstance == targetSalesforceObjectType.newSObject()){
-            return null;
+           	return null;
         }
 
         return targetSalesforceObjectInstance;

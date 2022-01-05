@@ -72,7 +72,7 @@ public class Import_Logging_Test {
     
     // Create a basic log message
     private static Import_Logging createBasicLogMessage(){
-        List<Import_Message__c> importMessages = Import_TestMessageDataFactory.create_ImportObject(Import_TestPayloadDataFactory.xmlPayload);
+        List<Import_Message__c> importMessages = Import_ImportMessage_DataFactory_Test.create_ImportObject(Import_Payload_DataFactory_Test.xmlPayload);
         return new Import_Logging(importMessages[0]);
     }
 }

@@ -163,7 +163,26 @@ Related to this object are log messages that show the status of the processing o
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Import Messages</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts>
+        <customTabListAdditionalFields>Message_Source_System__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Message_Source_Id__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Message_Type__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Last_Import_Successful__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>LAST_UPDATE</customTabListAdditionalFields>
+        <excludedStandardButtons>OpenListInQuip</excludedStandardButtons>
+        <excludedStandardButtons>NewFromDocument</excludedStandardButtons>
+        <excludedStandardButtons>Accept</excludedStandardButtons>
+        <excludedStandardButtons>IsotopeSubscription</excludedStandardButtons>
+        <excludedStandardButtons>Import</excludedStandardButtons>
+        <excludedStandardButtons>MassChangeOwner</excludedStandardButtons>
+        <excludedStandardButtons>PrintableListView</excludedStandardButtons>
+        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
+        <searchResultsAdditionalFields>Message_Source_System__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Message_Source_Id__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Message_Type__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Last_Import_Successful__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>LAST_UPDATE</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

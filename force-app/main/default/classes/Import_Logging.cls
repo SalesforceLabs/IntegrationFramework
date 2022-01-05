@@ -1,4 +1,4 @@
-public without sharing class Import_Logging {
+public with sharing class Import_Logging {
 
     public Import_Log__c importLogObject;
 
@@ -39,7 +39,7 @@ public without sharing class Import_Logging {
             for(Integer index = 0, size = saveResults.size(); index < size; index++) {  
                 string objectType = String.valueOf(recordsToSave[index].getSObjectType());
                 Id recordId = saveResults[index].getId();
-                string resultMessage = 'object: ' + objectType + ', Field Id: ' + recordId; 
+                string resultMessage = 'object: ' + objectType + ' Id: ' + recordId; 
                 // Find the save record
                 if(saveResults[index].isSuccess()) {
                     if(saveResults[index].isCreated()) {

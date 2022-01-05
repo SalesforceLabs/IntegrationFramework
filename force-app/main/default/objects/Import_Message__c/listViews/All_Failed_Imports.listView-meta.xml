@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>All</fullName>
+    <fullName>All_Failed_Imports</fullName>
     <columns>NAME</columns>
     <columns>Message_Source_System__c</columns>
     <columns>Message_Source_Id__c</columns>
@@ -8,5 +8,10 @@
     <columns>Last_Import_Successful__c</columns>
     <columns>LAST_UPDATE</columns>
     <filterScope>Everything</filterScope>
-    <label>All</label>
+    <filters>
+        <field>Last_Import_Successful__c</field>
+        <operation>equals</operation>
+        <value>0</value>
+    </filters>
+    <label>All Failed Imports</label>
 </ListView>

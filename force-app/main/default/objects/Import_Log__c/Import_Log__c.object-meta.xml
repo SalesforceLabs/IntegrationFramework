@@ -161,7 +161,23 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Import Logs</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts>
+        <customTabListAdditionalFields>Import_Is_Successful__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Import_Started_DateTime__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Import_Finished_DateTime__c</customTabListAdditionalFields>
+        <excludedStandardButtons>New</excludedStandardButtons>
+        <excludedStandardButtons>OpenListInQuip</excludedStandardButtons>
+        <excludedStandardButtons>NewFromDocument</excludedStandardButtons>
+        <excludedStandardButtons>Accept</excludedStandardButtons>
+        <excludedStandardButtons>IsotopeSubscription</excludedStandardButtons>
+        <excludedStandardButtons>Import</excludedStandardButtons>
+        <excludedStandardButtons>MassChangeOwner</excludedStandardButtons>
+        <excludedStandardButtons>PrintableListView</excludedStandardButtons>
+        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
+        <searchResultsAdditionalFields>Import_Is_Successful__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Import_Started_DateTime__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Import_Finished_DateTime__c</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

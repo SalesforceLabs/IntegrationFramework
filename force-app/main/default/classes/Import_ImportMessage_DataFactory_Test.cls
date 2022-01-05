@@ -1,5 +1,5 @@
 @IsTest
-public class Import_TestMessageDataFactory {
+public class Import_ImportMessage_DataFactory_Test {
 
     // Create the body that can be added to an API call
     public static string apiBody(string payload) {
@@ -25,10 +25,10 @@ public class Import_TestMessageDataFactory {
             '    "Message_Payload__c":"' + payload + '",' +
             '    "Message_Source_Id__c":"fdeab5f5-75f1-4875-b0d8-b193e4ebf330",' +
             '    "Message_Source_System__c":"System1",' +
-            '    "Message_Type__c":"TestType"' +
+            '    "Message_Type__c":"Test_Type"' +
             '  }]' +
             '}';       
-        return urlBody;
+        return urlBody; 
     }
    
     // Create basic import objects
@@ -39,7 +39,7 @@ public class Import_TestMessageDataFactory {
         importMessage.Message_Payload__c = payload;
         importMessage.Message_Source_Id__c = 'fdeab5f5-75f1-4875-b0d8-b193e4ebf330';
         importMessage.Message_Source_System__c = 'System1';
-        importMessage.Message_Type__c = 'TestType';
+        importMessage.Message_Type__c = 'Test_Type';
         importMessages.add(importMessage);
         insert importMessages;
         

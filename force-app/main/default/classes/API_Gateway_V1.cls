@@ -1,4 +1,4 @@
-@RestResource(urlMapping = '/apigateway/v1/*')
+@RestResource(urlMapping = '/v1/*')
 global with sharing class API_Gateway_V1 {
     
     // Based on the request URL, get the routing record
@@ -15,10 +15,27 @@ global with sharing class API_Gateway_V1 {
 	}    
     
     @HttpGet
+    global static void handleGet() {
+        handleRequest();
+    }
+
     @HttpPut
+    global static void handlePut() {
+        handleRequest();
+    }    
+
     @HttpPost
+    global static void handlePost() {
+        handleRequest();
+    }
+    
     @HttpDelete
-    global static void handleRequest() {
+    global static void handleDelete() {
+        handleRequest();
+    }
+    
+	// Process the rerquest
+    private static void handleRequest() {
         try {
             RestContext.response = importService.execute(RestContext.request, RestContext.response); 
         } 

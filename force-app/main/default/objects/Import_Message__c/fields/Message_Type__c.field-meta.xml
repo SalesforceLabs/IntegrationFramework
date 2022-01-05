@@ -24,9 +24,9 @@ TestType is used for unit tests</description>
                 <label>Type2</label>
             </value>
             <value>
-                <fullName>TestType</fullName>
+                <fullName>Test_Type</fullName>
                 <default>false</default>
-                <label>TestType</label>
+                <label>Test_Type</label>
             </value>
         </valueSetDefinition>
     </valueSet>

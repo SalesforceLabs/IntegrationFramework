@@ -1,4 +1,4 @@
-public class Import_Mapping_Utility {
+public with sharing class Import_Mapping_Utility {
         
     // Convert a node from the payload field to the correct Salesforce field type
     public static Object convertToSalesforceFieldType(Schema.SObjectType targetSalesforceObjectType, Mapping_Field__mdt fieldMapping, Object value){

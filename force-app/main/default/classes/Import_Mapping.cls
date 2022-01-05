@@ -1,4 +1,4 @@
-public class Import_Mapping {
+public with sharing class Import_Mapping {
 
     @TestVisible
     private static List<Mapping_Object__mdt> mappingObjectsMDT;

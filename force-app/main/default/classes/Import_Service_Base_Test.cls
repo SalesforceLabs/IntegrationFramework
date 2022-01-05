@@ -42,7 +42,7 @@ public class Import_Service_Base_Test {
     @IsTest
     static void execute_Invalid_Record_Exception_Test(){
         RestContext.request = new RestRequest();
-        RestContext.request.requestBody = Blob.valueof(Import_TestMessageDataFactory.apiBody(Import_TestPayloadDataFactory.jsonPayload)); 
+        RestContext.request.requestBody = Blob.valueof(Import_ImportMessage_DataFactory_Test.apiBody(Import_Payload_DataFactory_Test.jsonPayload)); 
         RestContext.response = new RestResponse();
         // Save the data
         Service_Test_Error testService = new Service_Test_Error();
@@ -56,11 +56,11 @@ public class Import_Service_Base_Test {
     // based on the mapping objects
     @IsTest
     static void execute_Save_Test(){
-        Import_Mapping.currentMessageType = 'TestType';
-        Import_Mapping.mappingObjectsMDT = Import_TestMetadataFactory.createLeadMappingObjectsAndFields_JSON();
+        Import_Mapping.currentMessageType = 'Test_Type';
+        Import_Mapping.mappingObjectsMDT = Import_Metadata_DataFactory_JSON_Test.createLeadMappingObjectsAndFields();
 
         RestContext.request = new RestRequest();
-        RestContext.request.requestBody = Blob.valueof(Import_TestMessageDataFactory.apiBody(Import_TestPayloadDataFactory.jsonPayload)); 
+        RestContext.request.requestBody = Blob.valueof(Import_ImportMessage_DataFactory_Test.apiBody(Import_Payload_DataFactory_Test.jsonPayload)); 
         RestContext.response = new RestResponse();
         // Save the data
         Import_JSON_Service jsonService = new Import_JSON_Service();

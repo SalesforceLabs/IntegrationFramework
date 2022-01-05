@@ -7,7 +7,7 @@ public class Import_Mapping_Test {
     @IsTest
     static void no_Mappings_Test(){
         // Create an import message
-        List<Import_Message__c> importMessages = Import_TestMessageDataFactory.create_ImportObject(Import_TestPayloadDataFactory.xmlPayload);
+        List<Import_Message__c> importMessages = Import_ImportMessage_DataFactory_Test.create_ImportObject(Import_Payload_DataFactory_Test.xmlPayload);
         boolean exceptionThrown = false;
         try{
             // Get the mappings for the message type
@@ -23,12 +23,12 @@ public class Import_Mapping_Test {
     @IsTest
     static void return_Mappings_Test(){
         // Create an import message
-        List<Import_Message__c> importMessages = Import_TestMessageDataFactory.create_ImportObject(Import_TestPayloadDataFactory.xmlPayload);
+        List<Import_Message__c> importMessages = Import_ImportMessage_DataFactory_Test.create_ImportObject(Import_Payload_DataFactory_Test.xmlPayload);
         boolean exceptionThrown = false;
         try{
             // Get the mappings for the message type
-            Import_Mapping.currentMessageType = 'TestType';
-            Import_Mapping.mappingObjectsMDT = Import_TestMetadataFactory.createLeadMappingObjectsAndFields_JSON();
+            Import_Mapping.currentMessageType = 'Test_Type';
+            Import_Mapping.mappingObjectsMDT = Import_Metadata_DataFactory_JSON_Test.createLeadMappingObjectsAndFields();
             List<Mapping_Object__mdt> objectMappings = Import_Mapping.getMappings(importMessages[0]);
             System.assert(objectMappings.size() == 4, '4 mapping object should be returned. Actual ' + objectMappings.size());
         }
