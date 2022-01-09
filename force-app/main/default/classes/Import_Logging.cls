@@ -34,31 +34,51 @@ public with sharing class Import_Logging {
     	List<String> results = new List<String>();
     	List<String> errors = new List<String>();
         
-        if (saveResults.size() > 0){
-            // Loop through the upsert results
-            for(Integer index = 0, size = saveResults.size(); index < size; index++) {  
-                string objectType = String.valueOf(recordsToSave[index].getSObjectType());
-                Id recordId = saveResults[index].getId();
-                string resultMessage = 'object: ' + objectType + ' Id: ' + recordId; 
-                // Find the save record
-                if(saveResults[index].isSuccess()) {
-                    if(saveResults[index].isCreated()) {
-                        results.add('Created ' + resultMessage);
-                    } else {
-                        results.add('Updated ' + resultMessage);
-                    }
-                }
-                else {
-                    // Operation failed, so get all errors
-                    for(Database.Error err : saveResults[index].getErrors()) {
-	                	errors.add('Error for: "' + resultMessage + '", Error for field: ' + err.getFields() + ', Error message: "' + err.getMessage() + '".');   
-                    }
-                }
-            }
-            
-			importLogObject.Import_Is_Successful__c = (errors.size() == 0) ? true : false;    
-            string resultMessage = String.join(results, '\n') + String.join(errors, '\n');
-            importLogObject.Import_Log__c += resultMessage;
+        if (saveResults.size() == 0){
+            return;
         }
+        
+        // Loop through the upsert results
+        for(Integer index = 0; index < saveResults.size(); index++) {  
+            string objectMessage = getObjectMessage(saveResults[index], recordsToSave[index]);
+            // Find the save record
+            if(saveResults[index].isSuccess()) {
+                results.add(objectMessage);
+            }
+            else {
+                // Operation failed, so get all errors
+                string errorMessage = 'Error for: "' + objectMessage + '' + getErrorMessages(saveResults[index]);
+                errors.add(errorMessage);
+            }
+        }
+        
+        importLogObject.Import_Is_Successful__c = (errors.size() == 0) ? true : false;    
+        string resultMessage = String.join(results, '\n') + String.join(errors, '\n');
+        importLogObject.Import_Log__c += resultMessage;
+    }
+    
+    // Create the error messages
+    private String getErrorMessages(Database.UpsertResult saveResult){
+        List<String> errors = new List<String>();
+        // Operation failed, so get all errors
+        for(Database.Error err : saveResult.getErrors()) {
+            errors.add('", Error for field: ' + err.getFields() + ', Error message: "' + err.getMessage() + '".');   
+        }
+		return String.join(errors, ' ');        
+    }
+    
+    // Create the success massage
+    private string getObjectMessage(Database.UpsertResult saveResult, sObject saveObject){
+        string objectType = String.valueOf(saveObject.getSObjectType());
+        Id recordId = saveResult.getId();
+        string objectMessage = 'object: ' + objectType + ' Id: ' + recordId; 
+        
+        string resultMessage; 
+        if(saveResult.isCreated()) {
+            resultMessage = 'Created ' + objectMessage;
+        } else {
+            resultMessage = 'Updated ' + objectMessage;
+        }    
+        return resultMessage;
     }
 }

@@ -1,4 +1,4 @@
-public abstract class Import_Service_Base implements IAPI_Service {
+public with sharing abstract class Import_Service_Base implements IAPI_Service {
     
     public RestResponse execute(RestRequest request, RestResponse response){
         
@@ -14,6 +14,8 @@ public abstract class Import_Service_Base implements IAPI_Service {
         	// The request body in JSON can contain an array of import messages under "records"    
             Map<String, Object> urlRequestBody = (Map<String, Object>) JSON.deserializeUntyped(RestContext.request.requestBody.toString());
             
+            // Create all the iport messages
+            List<Import_Message__c> importMessages = new List<Import_Message__c>();
             List<Object> arrayJSONRecords = (List<Object>) urlRequestBody.get('records');
 			// Loop through all the records in the requestbody
             for (Object importMessageJSON : arrayJSONRecords) {
@@ -30,8 +32,16 @@ public abstract class Import_Service_Base implements IAPI_Service {
                 importMessage.Message_Type__c = (string) importMessageMap.get('Message_Type__c');
                 importMessage.Message_URL__c = request.RequestURI;
                 importMessage.Message_HttpMethod__c = request.HTTPMethod;
-                insert importMessage;
-                
+                importMessages.add(importMessage);                
+            }
+            if (Schema.sObjectType.Import_Message__c.isCreateable()) {
+            	insert importMessages;
+            }
+            
+            // Process the import messages
+            for (Import_Message__c loopImportMessage : importMessages){
+                // Need to save the current import message so that it can be used in the catch
+                importMessage = loopImportMessage;
                 // Process the import record and return the log message with the result
                 List<sObject> objectsToSave = processRecord(importMessage);
                 // Save the objects that were created for this import message
@@ -40,7 +50,7 @@ public abstract class Import_Service_Base implements IAPI_Service {
                 // Log the result
                 importLog = new Import_logging(importMessage);
                 importLog.logSuccess(saveResults, objectsToSave);
-                importLogs.add(importLog.importLogObject);
+                importLogs.add(importLog.importLogObject);                
             }
             
             // Return the result        
@@ -56,8 +66,8 @@ public abstract class Import_Service_Base implements IAPI_Service {
                 importLogs.add(importLog.importLogObject);                
             }
             
-            System.debug('INT: ' + e.getMessage());
-            System.debug('INT: ' + e.getStackTraceString()); 
+            System.debug(LoggingLevel.ERROR, 'INT: ' + e.getMessage());
+            System.debug(LoggingLevel.ERROR, 'INT: ' + e.getStackTraceString()); 
 
             response.statusCode = 500;
             response.responseBody = Blob.valueOf(e.getMessage());            
@@ -67,7 +77,9 @@ public abstract class Import_Service_Base implements IAPI_Service {
             // Example why finally: URL body contains 10 records. 8 records where saved correctly.
             // 9th record caused an undhandled exception. The logging for these 8 successful
             // records needs to be saved.
-            insert importLogs;
+            if (Schema.sObjectType.Import_Log__c.isCreateable()) {
+            	insert importLogs;
+            }
         }
         
         return response;
@@ -130,6 +142,8 @@ public abstract class Import_Service_Base implements IAPI_Service {
 	        	Schema.DescribeSObjectResult[] descResult = Schema.describeSObjects(new String[]{mappingObject.Salesforce_Object__c});
     	    	Schema.SObjectField externalField = descResult[0].fields.getMap().get(mappingObject.Salesforce_External_Id_Field__c);
 
+                // DML within a loop. Minimal risk.
+                // All changes of objects of the same type are grouped and saved with one DML statement
                 Database.UpsertResult[] objectSaveResult = Database.Upsert(subsetRecordsToSave, externalField, false); 
                 saveResults.addAll(objectSaveResult);
             }

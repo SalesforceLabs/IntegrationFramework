@@ -5,13 +5,13 @@ public class Import_Logging_Test {
     @istest
     public static void logSuccess_Test(){
         // Setup test data
-        Import_Logging importLog = createBasicLogMessage();
         List<Account> recordsToSave = new List<Account>();
         recordsToSave.add(new Account(name = 'TEST'));
         List<Database.UpsertResult> saveResults = Database.Upsert(recordsToSave, Account.Id, false);
         
+        Import_Logging importLog = createBasicLogMessage();
         importLog.logSuccess(saveResults, recordsToSave);
-        System.assert(importLog.importLogObject.Import_Is_Successful__c == true, 'Succesful should be true. Actual ' + importLog.importLogObject.Import_Is_Successful__c);
+        System.assert(importLog.importLogObject.Import_Is_Successful__c == true, 'Successful should be true. Actual ' + importLog.importLogObject.Import_Is_Successful__c);
         System.assert(importLog.importLogObject.Import_Finished_DateTime__c != null, 'Finished date should not be null. Actual ' + importLog.importLogObject.Import_Finished_DateTime__c);
         System.assert(importLog.importLogObject.Import_Message__c != null, 'Log should be linked to an import message. Actual ' + importLog.importLogObject.Import_Message__c);
     }
@@ -20,14 +20,14 @@ public class Import_Logging_Test {
     @istest
     public static void logError_Test(){
         // Setup test data
-        Import_Logging importLog = createBasicLogMessage();
         List<Account> recordsToSave = new List<Account>();
         recordsToSave.add(new Account(name = 'TEST'));
-        List<Database.UpsertResult> saveResults = Database.Upsert(recordsToSave, Account.Id, false);
+        Database.Upsert(recordsToSave, Account.Id, false);
         Import_Exceptions.API_Exception importAPIException = new Import_Exceptions.API_Exception('TEST');
 
+        Import_Logging importLog = createBasicLogMessage();
         importLog.logError(importAPIException);
-        System.assert(importLog.importLogObject.Import_Is_Successful__c == false, 'Succesful should be false. Actual ' + importLog.importLogObject.Import_Is_Successful__c);
+        System.assert(importLog.importLogObject.Import_Is_Successful__c == false, 'Successful should be false. Actual ' + importLog.importLogObject.Import_Is_Successful__c);
         System.assert(importLog.importLogObject.Import_Finished_DateTime__c != null, 'Finished should not be null. Actual ' + importLog.importLogObject.Import_Finished_DateTime__c);
         System.assert(importLog.importLogObject.Import_Log__c.contains('TEST'), 'message should contain TEST. Actual ' + importLog.importLogObject.Import_Log__c);
         System.assert(importLog.importLogObject.Import_Message__c != null, 'Log should be linked to an import message. Actual ' + importLog.importLogObject.Import_Message__c);
@@ -37,14 +37,14 @@ public class Import_Logging_Test {
     @istest 
     public static void logSaveResult_Test(){
         // Setup test data
-        Import_Logging importLog = createBasicLogMessage();
         List<Account> recordsToSave = new List<Account>();
         recordsToSave.add(new Account(name = 'TEST'));
 		
 		// Test insert account
         List<Database.UpsertResult> saveResults = Database.Upsert(recordsToSave, Account.Id, false);
+        Import_Logging importLog = createBasicLogMessage();
         importLog.logSuccess(saveResults, recordsToSave);
-        System.assert(importLog.importLogObject.Import_Is_Successful__c == true, 'Succesful should be true. Actual ' + importLog.importLogObject.Import_Is_Successful__c);
+        System.assert(importLog.importLogObject.Import_Is_Successful__c == true, 'Successful should be true. Actual ' + importLog.importLogObject.Import_Is_Successful__c);
         System.assert(importLog.importLogObject.Import_Log__c.contains('Created'), 'message should contain Created. Actual ' + importLog.importLogObject.Import_Log__c);
         System.assert(!importLog.importLogObject.Import_Log__c.contains('Error'), 'message should not contain Error. Actual ' + importLog.importLogObject.Import_Log__c);
 
@@ -55,7 +55,7 @@ public class Import_Logging_Test {
         recordsToSave.add(updateAccount);
         saveResults = Database.Upsert(recordsToSave, Account.Id, false);
         importLog.logSuccess(saveResults, recordsToSave);
-        System.assert(importLog.importLogObject.Import_Is_Successful__c == true, 'Succesful should be true. Actual ' + importLog.importLogObject.Import_Is_Successful__c);
+        System.assert(importLog.importLogObject.Import_Is_Successful__c == true, 'Successful should be true. Actual ' + importLog.importLogObject.Import_Is_Successful__c);
         System.assert(importLog.importLogObject.Import_Log__c.contains('Updated'), 'message should contain Created. Actual ' + importLog.importLogObject.Import_Log__c);
         System.assert(!importLog.importLogObject.Import_Log__c.contains('Error'), 'message should not contain Error. Actual ' + importLog.importLogObject.Import_Log__c);
 
@@ -66,7 +66,7 @@ public class Import_Logging_Test {
         recordsToSave.add(updateAccount);
         saveResults = Database.Upsert(recordsToSave, Account.Id, false);
         importLog.logSuccess(saveResults, recordsToSave);
-        System.assert(importLog.importLogObject.Import_Is_Successful__c == false, 'Succesful should be false. Actual ' + importLog.importLogObject.Import_Is_Successful__c);
+        System.assert(importLog.importLogObject.Import_Is_Successful__c == false, 'Successful should be false. Actual ' + importLog.importLogObject.Import_Is_Successful__c);
         System.assert(importLog.importLogObject.Import_Log__c.contains('Error'), 'message should contain Error. Actual ' + importLog.importLogObject.Import_Log__c);
     }
     

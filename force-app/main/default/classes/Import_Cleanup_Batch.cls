@@ -1,7 +1,7 @@
-global with sharing class Import_Cleanup_Batch implements Database.Batchable<sObject>, Schedulable {
+public with sharing class Import_Cleanup_Batch implements Database.Batchable<sObject>, Schedulable {
     
     // Get all records that need to be deleted that are older then 4 weeks
-    global Database.QueryLocator start(Database.BatchableContext bc) {
+    public Database.QueryLocator start(Database.BatchableContext bc) {
         return Database.getQueryLocator(
             'SELECT Id ' +
             'FROM IntServ__Import_Message__c  ' +
@@ -10,18 +10,24 @@ global with sharing class Import_Cleanup_Batch implements Database.Batchable<sOb
     }
     
     // Delete the import messages that
-    global void execute(Database.BatchableContext bc, List<IntServ__Import_Message__c> records){
-        delete records;
+    public void execute(Database.BatchableContext bc, List<IntServ__Import_Message__c> records){
+        // If the running user is allowed to delete IntServ__Import_Message__c records
+        if (Schema.sObjectType.IntServ__Import_Message__c.isDeletable()) {
+        	delete records;
+        }
     }
     
     // Reschedule the batch to run again next sunday
-    global void finish(Database.BatchableContext bc){
-        Import_Cleanup_Batch batch = new Import_Cleanup_Batch();
-		String cronSchedule = '0 0 21 ? * SUN';
+    public void finish(Database.BatchableContext batchableContext){
+        // Prevent unit tests from scheduling the job to prevent error "Job already exists"
+        if (!Test.isRunningTest()){
+            String cronSchedule = '0 0 21 ? * SUN';
+            system.schedule('Import_Cleanup_Batch', cronSchedule, new Import_Cleanup_Batch());                    
+        }
     }
     
     // When the schedule fires the batch is started 
-    global void execute(SchedulableContext SC) {
+    public void execute(SchedulableContext schedulableContext) {
     	database.executebatch(new Import_Cleanup_Batch());            
    	}
 }

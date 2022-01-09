@@ -25,39 +25,21 @@ public with sharing class Import_JSON_Service extends Import_Service_Base {
     }
     
     // Based on the mapping objects and fields, create a Salesforce object based on the import message payload
-    private static sObject mapJSONToObject(Mapping_Object__mdt mappingObject, Map<String, Object> jsonObject){
+    private sObject mapJSONToObject(Mapping_Object__mdt mappingObject, Map<String, Object> jsonObject){
         // Create the target Salesforce object
         Schema.SObjectType targetSalesforceObjectType = Schema.getGlobalDescribe().get(mappingObject.Salesforce_Object__c);
-		Schema.DescribeSObjectResult targetObjectDescription = targetSalesforceObjectType.getDescribe();
-        sObject targetSalesforceObjectInstance = targetSalesforceObjectType.newSObject();
+		sObject targetSalesforceObjectInstance = targetSalesforceObjectType.newSObject();
 
         // Loop through all the field mappings
         for(Mapping_Field__mdt fieldMapping : mappingObject.Mapping_Fields__r){
-            Object value = jsonObject.get(fieldMapping.Message_Payload_Node__c);
+            Object jsonValue = jsonObject.get(fieldMapping.Message_Payload_Node__c);
             // if the key is not found, the map returns null that value does not need to be converted
-            if (value == null){
+            if (jsonValue == null){
                 continue;
             }
             
-            // If not a collection then transform the single field
-            if (!fieldMapping.IntServ__Is_Collection__c){
-                // Convert the value to the correct type
-                Object typedValue = Import_Mapping_Utility.convertToSalesforceFieldType(targetSalesforceObjectType, fieldMapping, value);
-                targetSalesforceObjectInstance.put(fieldMapping.Salesforce_Field__c, typedValue);                                     
-            }
-            else { // the node contains a list of value
-                String collectionValues = '';  
-                List<Object> valueObjects = (List<Object>)jsonObject.get(fieldMapping.Message_Payload_Node__c);
-                // Get all value elements
-                for (Object valueObject : valueObjects){
-                    Map<String, Object> valueObjectMap = (Map<String, Object>)valueObject;
-
-                    Object typedValue = Import_Mapping_Utility.convertToSalesforceFieldType(targetSalesforceObjectType, fieldMapping, valueObjectMap.get('value'));
-                    collectionValues += (collectionValues != '') ? ';' : '';
-                    collectionValues += typedValue;                                
-                }
-                targetSalesforceObjectInstance.put(fieldMapping.Salesforce_Field__c, collectionValues);                 
-            }
+            Object value = getValue(fieldMapping, jsonValue, targetSalesforceObjectType);
+            targetSalesforceObjectInstance.put(fieldMapping.Salesforce_Field__c, value);                             
         }    
         
         // If nothing has been updated on the object then return null 
@@ -67,6 +49,31 @@ public with sharing class Import_JSON_Service extends Import_Service_Base {
         }
 
         return targetSalesforceObjectInstance;
+    }
+    
+    // Get the value from the node
+    // If the node is a colltion of values then concatenate the values
+    private Object getValue(Mapping_Field__mdt fieldMapping, Object jsonValue, Schema.SObjectType targetSalesforceObjectType){
+		Object value;
+        // If not a collection then transform the single field
+        if (!fieldMapping.IntServ__Is_Collection__c){
+            // Convert the value to the correct type
+            value = Import_Mapping_Utility.convertToSalesforceFieldType(targetSalesforceObjectType, fieldMapping, jsonValue);
+        }
+        else { // the node contains a list of value
+            String collectionValues = '';  
+            List<Object> valueObjects = (List<Object>)jsonValue;
+            // Get all value elements
+            for (Object valueObject : valueObjects){
+                Map<String, Object> valueObjectMap = (Map<String, Object>)valueObject;
+                
+                Object typedValue = Import_Mapping_Utility.convertToSalesforceFieldType(targetSalesforceObjectType, fieldMapping, valueObjectMap.get('value'));
+                collectionValues += (collectionValues != '') ? ';' : '';
+                collectionValues += typedValue;                                
+            }
+            value = collectionValues;
+        }
+		return value;
     }
 
     // Get the object node from the main JSON object and

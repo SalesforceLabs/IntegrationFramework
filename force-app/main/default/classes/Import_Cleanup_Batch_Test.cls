@@ -47,7 +47,8 @@ public class Import_Cleanup_Batch_Test {
         System.assertEquals(1, [SELECT COUNT()
                                 FROM AsyncApexJob
                                 WHERE ApexClassId IN (SELECT Id FROM ApexClass 
-                                                      WHERE NamespacePrefix = 'IntServ' AND Name = 'Import_Cleanup_Batch')]);
+                                                      WHERE NamespacePrefix = 'IntServ' AND Name = 'Import_Cleanup_Batch')],
+                            'Batch job should be scheduled');
    
      	Test.stopTest(); 
     }
@@ -71,9 +72,9 @@ public class Import_Cleanup_Batch_Test {
                           WHERE id = :jobId];
         
         // Verify the scheduled time is correct
-        System.assertEquals(cronSchedule, ct.CronExpression);
+        System.assertEquals(cronSchedule, ct.CronExpression, 'Scheduled time is not ' + cronSchedule);
         // Verify the job has not run
-        System.assertEquals(0, ct.TimesTriggered);
+        System.assertEquals(0, ct.TimesTriggered, 'Schedule did not run');
         
         // Start the schedule execute (not started automaticly by stopTest)
         cleanupBatch.execute(null);

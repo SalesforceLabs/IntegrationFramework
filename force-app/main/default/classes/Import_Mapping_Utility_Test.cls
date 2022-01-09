@@ -32,7 +32,7 @@ public class Import_Mapping_Utility_Test {
             Schema.SObjectType targetSalesforceObjectType = Schema.getGlobalDescribe().get('Lead');
         
             Mapping_Field__mdt fieldMapping = Import_Metadata_DataFactory_Utility_Test.createMappingField('DUMMY_PAYLOAD_FIELD', 'INVALID_SALESFORCE_FIELD', '', false);
-            Object value = Import_Mapping_Utility.convertToSalesforceFieldType(targetSalesforceObjectType, fieldMapping, '1000000.50');
+            Import_Mapping_Utility.convertToSalesforceFieldType(targetSalesforceObjectType, fieldMapping, '1000000.50');
         }
         catch (Exception e){
             exceptionThrown = true;
@@ -50,7 +50,7 @@ public class Import_Mapping_Utility_Test {
             Schema.SObjectType targetSalesforceObjectType = Schema.getGlobalDescribe().get('Lead');
         
             Mapping_Field__mdt fieldMapping = Import_Metadata_DataFactory_Utility_Test.createMappingField('DUMMY_PAYLOAD_FIELD', 'ID', 'INVALID_TRANSFORMATION_CLASS', false);
-            Object value = Import_Mapping_Utility.convertToSalesforceFieldType(targetSalesforceObjectType, fieldMapping, '1000000.50');
+            Import_Mapping_Utility.convertToSalesforceFieldType(targetSalesforceObjectType, fieldMapping, '1000000.50');
         }
         catch (Exception e){
             exceptionThrown = true;

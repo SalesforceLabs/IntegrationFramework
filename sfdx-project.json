@@ -1,14 +1,21 @@
 {
-  "packageDirectories": [
-    {
-      "path": "force-app",
-      "default": true,
-      "package": "Integration Framework",
-      "versionName": "ver 0.1",
-      "versionNumber": "0.1.0.NEXT"
+    "namespace": "IntServ",
+    "sfdcLoginUrl": "https://login.salesforce.com",
+    "sourceApiVersion": "52.0",
+    "packageDirectories": [
+        {
+            "path": "force-app",
+            "default": true,
+            "package": "Integration Framework",
+            "versionName": "V0.1",
+            "versionNumber": "0.1.0.NEXT",
+            "versionDescription": "First release",
+            "definitionFile": "config/project-scratch-def.json",
+            "releaseNotesUrl": ""
+        }
+    ],
+    "packageAliases": {
+        "Integration Framework": "0Ho5Y000000wkQUSAY",
+        "Integration Framework@0.1.0-1": "04t5Y000001wMBmQAM"
     }
-  ],
-  "namespace": "IntServ",
-  "sfdcLoginUrl": "https://login.salesforce.com",
-  "sourceApiVersion": "52.0"
 }

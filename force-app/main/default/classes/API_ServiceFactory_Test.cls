@@ -11,7 +11,7 @@ public class API_ServiceFactory_Test {
         boolean exceptionThrown = false;
         try {
             API_ServiceFactory.apiRoutings = API_Route_Metadata_DataFactory_Test.createTestRoutes();
-        	IAPI_Service importService = (IAPI_Service) API_ServiceFactory.createService(request);
+        	API_ServiceFactory.createService(request);
         }
         catch (Import_Exceptions.API_Exception apiException){
             exceptionThrown = true;
@@ -29,7 +29,7 @@ public class API_ServiceFactory_Test {
         boolean exceptionThrown = false;
         try {
             API_ServiceFactory.apiRoutings = API_Route_Metadata_DataFactory_Test.createTestRoutes();
-        	IAPI_Service importService = (IAPI_Service) API_ServiceFactory.createService(request); 
+         	API_ServiceFactory.createService(request); 
         }
         catch (Import_Exceptions.API_Exception apiException){
             exceptionThrown = true;
