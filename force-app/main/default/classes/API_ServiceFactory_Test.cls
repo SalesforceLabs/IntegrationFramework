@@ -33,7 +33,7 @@ public class API_ServiceFactory_Test {
         }
         catch (Import_Exceptions.API_Exception apiException){
             exceptionThrown = true;
-        	System.assert(apiException.getMessage() == 'Route not found', 'Expected "Route not found". Actual ' + apiException.getMessage());   
+        	System.assert(apiException.getMessage().contains('No API route found'), 'Expected "No API route found". Actual ' + apiException.getMessage());   
         }
         System.assert(exceptionThrown, 'Excepted should be thrown');
     }

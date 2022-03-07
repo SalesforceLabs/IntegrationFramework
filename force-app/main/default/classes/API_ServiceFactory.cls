@@ -23,6 +23,6 @@ public with sharing class API_ServiceFactory {
             }
         } 
 
-        throw new Import_Exceptions.API_Exception('Route not found');
+        throw new Import_Exceptions.API_Exception('Cannot import the message. No API route found');
     }
 }

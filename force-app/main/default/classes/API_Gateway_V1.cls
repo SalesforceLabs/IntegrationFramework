@@ -40,9 +40,13 @@ global with sharing class API_Gateway_V1 {
             RestContext.response = importService.execute(RestContext.request, RestContext.response); 
         } 
         catch (Exception apiException) {
+            // Create the response JSON
+            API_Response errorResponse = new API_Response();
+            errorResponse.createUnhandledExcpetionResponse(apiException.getMessage());
+            
             // An error occured
             RestContext.response.statusCode = 500;
-            RestContext.response.responseBody = Blob.valueOf(apiException.getMessage());
+            RestContext.response.responseBody = Blob.valueOf(JSON.serialize(errorResponse));
         }
     }
 }

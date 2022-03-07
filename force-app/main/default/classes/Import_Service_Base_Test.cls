@@ -19,7 +19,7 @@ public class Import_Service_Base_Test {
         RestResponse serviceResponse = jsonService.execute(RestContext.request, RestContext.response);
 		
         System.assert(serviceResponse.statusCode == 500, 'Expected Status code 500. Actual ' + serviceResponse.statusCode);
-        System.assert(serviceResponse.responseBody.toString() == 'Request body is not correct', 'Expected error message: Request body is not correct. Actual ' + serviceResponse.responseBody.toString());
+        System.assert(serviceResponse.responseBody.toString().contains('Request body is not correct'), 'Expected error message: Request body is not correct. Actual ' + serviceResponse.responseBody.toString());
     }
     
     // Test that the URL body is JSON and contains an array of records and
@@ -34,7 +34,7 @@ public class Import_Service_Base_Test {
         RestResponse serviceResponse = jsonService.execute(RestContext.request, RestContext.response);
 		
         System.assert(serviceResponse.statusCode == 500, 'Expected Status code 500. Actual ' + serviceResponse.statusCode);
-        System.assert(serviceResponse.responseBody.toString() == 'Request record is not correct', 'Expected error message: Request record is not correct. Actual ' + serviceResponse.responseBody.toString());
+        System.assert(serviceResponse.responseBody.toString().contains('Request record is not correct'), 'Expected error message: Request record is not correct. Actual ' + serviceResponse.responseBody.toString());
     }
 
     // Test that an exception is thrown when an error happens when processing a
@@ -49,7 +49,7 @@ public class Import_Service_Base_Test {
         RestResponse serviceResponse = testService.execute(RestContext.request, RestContext.response);
 		
         System.assert(serviceResponse.statusCode == 500, 'Expected Status code 500. Actual ' + serviceResponse.statusCode);
-        System.assert(serviceResponse.responseBody.toString().startsWith('Error'), 'Expected error message to start with: Error. Actual ' + serviceResponse.responseBody.toString());
+        System.assert(serviceResponse.responseBody.toString().contains('"message":"Error"'), 'Expected error message to start with: Error. Actual ' + serviceResponse.responseBody.toString());
     }
     
     // Test that for a correct JSON record the data is beging saved in Salesforce
@@ -67,7 +67,9 @@ public class Import_Service_Base_Test {
         RestResponse serviceResponse = jsonService.execute(RestContext.request, RestContext.response);
 
         System.assert(serviceResponse.statusCode == 200, 'Expected Status code 200. Actual ' + serviceResponse.statusCode);
-        System.assert(serviceResponse.responseBody.toString().contains('Created object: Lead'), 'Expected result should contain "Created object: Lead". Actual ' + serviceResponse.responseBody.toString());
-        System.assert(serviceResponse.responseBody.toString().contains('Created object: Case'), 'Expected result should contain "Created object: Case". Actual ' + serviceResponse.responseBody.toString());
+        System.assert(serviceResponse.responseBody.toString().contains('CREATED'), 'Expected result should contain "CREATED". Actual ' + serviceResponse.responseBody.toString());
+        System.assert(serviceResponse.responseBody.toString().contains('Lead'), 'Expected result should contain "Lead". Actual ' + serviceResponse.responseBody.toString());
+        System.assert(serviceResponse.responseBody.toString().contains('CREATED'), 'Expected result should contain "CREATED". Actual ' + serviceResponse.responseBody.toString());
+    	System.assert(serviceResponse.responseBody.toString().contains('Case'), 'Expected result should contain "Case". Actual ' + serviceResponse.responseBody.toString());
     }
 }

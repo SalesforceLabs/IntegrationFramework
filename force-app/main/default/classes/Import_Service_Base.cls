@@ -69,8 +69,12 @@ public with sharing abstract class Import_Service_Base implements IAPI_Service {
             System.debug(LoggingLevel.ERROR, 'INT: ' + e.getMessage());
             System.debug(LoggingLevel.ERROR, 'INT: ' + e.getStackTraceString()); 
 
+            // Create the response JSON
+            API_Response errorResponse = new API_Response();
+            errorResponse.createUnhandledExcpetionResponse(e.getMessage());
+            
             response.statusCode = 500;
-            response.responseBody = Blob.valueOf(e.getMessage());            
+            response.responseBody = Blob.valueOf(JSON.serialize(errorResponse));            
         }
         finally {
             // Save the log files
@@ -99,17 +103,27 @@ public with sharing abstract class Import_Service_Base implements IAPI_Service {
         }  
         
         if (!isJSONValid && !urlRequestBody.contains('records')){
-        	throw new Import_Exceptions.RequestBody_Exception('Request body is not correct');
+        	throw new Import_Exceptions.RequestBody_Exception('Cannot import the message. Request body is not correct');
         }
     }
     
     // Throw an exception when a record does not contain the required fields
-    private static void validateRequestRecord(Map<String, Object> requestBody){
-        if (!(requestBody.containsKey('Message_Source_System__c') && 
-              requestBody.containsKey('Message_Type__c') &&
-              requestBody.containsKey('Message_Source_Id__c') &&
-              requestBody.containsKey('Message_Type__c'))){
-            throw new Import_Exceptions.RequestBody_Exception('Request record is not correct');
+    private static void validateRequestRecord(Map<String, Object> importMessageMap){
+        if (!(importMessageMap.containsKey('Message_Source_System__c') && 
+            importMessageMap.containsKey('Message_Type__c') &&
+            importMessageMap.containsKey('Message_Source_Id__c') &&
+            importMessageMap.containsKey('Message_Type__c'))){
+            throw new Import_Exceptions.RequestBody_Exception('Cannot import the message. Request record is not correct');
+        }
+        
+        // Check if the source id already exists
+        string importSourceId = (string) importMessageMap.get('Message_Source_Id__c');
+        List<Import_Message__c> duplicateImportMessages = [SELECT Id 
+                                                           FROM Import_Message__c
+                                                           WHERE Message_Source_Id__c = :importSourceId];
+        // If the source id already exists then throw an error
+        if (duplicateImportMessages.size() != 0){
+            throw new Import_Exceptions.RequestBody_Exception('Cannot import the message. There is alreadyy an import message for Message_Source_Id__c = ' + importSourceId);            
         }
     }
     
