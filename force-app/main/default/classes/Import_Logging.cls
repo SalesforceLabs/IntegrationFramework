@@ -36,10 +36,13 @@ public with sharing class Import_Logging {
     private void logSaveResult(Database.UpsertResult[] saveResults, list<sObject> recordsToSave){
         // Create the response JSON
         API_Response apiRepsonse = new API_Response();
+        apiRepsonse.response.success = true;
+        apiRepsonse.response.status = '';
         
         if (saveResults.size() == 0){
             apiRepsonse.response.status = 'NOCHANGES';
             importLogObject.Import_Log__c = JSON.serialize(apiRepsonse);
+            importLogObject.Import_Is_Successful__c = true;
             return;
         }
         
@@ -49,10 +52,12 @@ public with sharing class Import_Logging {
             // Find the save record
             if(saveResults[index].isSuccess()) {
                 apiRepsonse.response.results.add(resultObject);
+                apiRepsonse.response.resultsize = apiRepsonse.response.results.size(); 
             }
             else {
                 // Operation failed, so get all errors
                 API_Response.ErrorObject errorObject = getErrorMessages(saveResults[index], recordsToSave[index]);
+                apiRepsonse.response.success = false;
                 apiRepsonse.response.errors.add(errorObject);
                 apiRepsonse.response.errorsize = apiRepsonse.response.errors.size();   
             }

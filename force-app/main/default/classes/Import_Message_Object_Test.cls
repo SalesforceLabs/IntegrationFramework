@@ -10,8 +10,8 @@ public class Import_Message_Object_Test {
         Import_LogMessage_DataFactory_Test.create_one_ImportLogObject(importObjects, true);
         
         // Get the import objects to get the correct value for the formula fields
-        importObjects = [SELECT Id, IntServ__Last_Import_Successful__c FROM Import_Message__c];
-        System.assert(importObjects[0].IntServ__Last_Import_Successful__c == true, 'Import status should be true. Actual ' + importObjects[0].IntServ__Last_Import_Successful__c);
+        importObjects = [SELECT Id, Last_Import_Successful__c FROM Import_Message__c];
+        System.assert(importObjects[0].Last_Import_Successful__c == true, 'Import status should be true. Actual ' + importObjects[0].Last_Import_Successful__c);
     }
     
     // Test that the formula field shows the correct status based 
@@ -23,8 +23,8 @@ public class Import_Message_Object_Test {
         Import_LogMessage_DataFactory_Test.create_one_ImportLogObject(importObjects, false);
         
         // Get the import objects to get the correct value for the formula fields
-        importObjects = [SELECT Id, IntServ__Last_Import_Successful__c FROM Import_Message__c];
-        System.assert(importObjects[0].IntServ__Last_Import_Successful__c == false, 'Import status should be true. Actual ' + importObjects[0].IntServ__Last_Import_Successful__c);
+        importObjects = [SELECT Id, Last_Import_Successful__c FROM Import_Message__c];
+        System.assert(importObjects[0].Last_Import_Successful__c == false, 'Import status should be true. Actual ' + importObjects[0].Last_Import_Successful__c);
     }
     
     // Test that the formula field shows the correct status based 
@@ -36,8 +36,8 @@ public class Import_Message_Object_Test {
         Import_LogMessage_DataFactory_Test.create_two_ImportLogObject(importObjects, true);
         
         // Get the import objects to get the correct value for the formula fields
-        importObjects = [SELECT Id, IntServ__Last_Import_Successful__c FROM Import_Message__c];
-        System.assert(importObjects[0].IntServ__Last_Import_Successful__c == true, 'Import status should be true. Actual ' + importObjects[0].IntServ__Last_Import_Successful__c);
+        importObjects = [SELECT Id, Last_Import_Successful__c FROM Import_Message__c];
+        System.assert(importObjects[0].Last_Import_Successful__c == true, 'Import status should be true. Actual ' + importObjects[0].Last_Import_Successful__c);
     }
     
         // Test that the formula field shows the correct status based 
@@ -49,7 +49,7 @@ public class Import_Message_Object_Test {
         Import_LogMessage_DataFactory_Test.create_two_ImportLogObject(importObjects, false);
         
         // Get the import objects to get the correct value for the formula fields
-        importObjects = [SELECT Id, IntServ__Last_Import_Successful__c FROM Import_Message__c];
-        System.assert(importObjects[0].IntServ__Last_Import_Successful__c == false, 'Import status should be true. Actual ' + importObjects[0].IntServ__Last_Import_Successful__c);
+        importObjects = [SELECT Id, Last_Import_Successful__c FROM Import_Message__c];
+        System.assert(importObjects[0].Last_Import_Successful__c == false, 'Import status should be true. Actual ' + importObjects[0].Last_Import_Successful__c);
     }
 }

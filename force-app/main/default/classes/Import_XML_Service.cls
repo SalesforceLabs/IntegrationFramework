@@ -58,7 +58,7 @@ public with sharing class Import_XML_Service extends Import_Service_Base {
     private Object getValue(Mapping_Field__mdt fieldMapping, Dom.XmlNode[] nodes, Schema.SObjectType targetSalesforceObjectType){
         Object value;
         // If not a collection then transform the single field
-        if (!fieldMapping.IntServ__Is_Collection__c){
+        if (!fieldMapping.Is_Collection__c){
             string xmlValue = xmlUtiltiy.getText(nodes[0], fieldMapping.Message_Payload_Node__c);    
             // Convert the value to the correct type
             value = Import_Mapping_Utility.convertToSalesforceFieldType(targetSalesforceObjectType, fieldMapping, xmlValue);

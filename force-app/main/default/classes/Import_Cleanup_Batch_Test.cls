@@ -9,7 +9,7 @@ public class Import_Cleanup_Batch_Test {
     
     @IsTest
     public static void runBatchJobNoChanges_Test(){
-        List<IntServ__Import_Message__c> importRecords = [SELECT Id FROM IntServ__Import_Message__c];
+        List<Import_Message__c> importRecords = [SELECT Id FROM Import_Message__c];
         System.assert(importRecords.size() == 1, 'Expected 1. Actual ' + importRecords.size());
         
         Test.startTest();
@@ -17,14 +17,14 @@ public class Import_Cleanup_Batch_Test {
         Test.stopTest();
         
         // No records should have been deleted
-        importRecords = [SELECT Id FROM IntServ__Import_Message__c];
+        importRecords = [SELECT Id FROM Import_Message__c];
         System.assert(importRecords.size() == 1, 'Expected 1. Actual ' + importRecords.size());
     }
 
     @IsTest
     public static void runBatchJobChanges_Test(){
         // Set the created date of the import records back so they will be executed by the batch
-        List<IntServ__Import_Message__c> importRecords = [SELECT Id FROM IntServ__Import_Message__c];
+        List<Import_Message__c> importRecords = [SELECT Id FROM Import_Message__c];
         System.assert(importRecords.size() == 1, 'Expected 1. Actual ' + importRecords.size());
         Test.setCreatedDate(importRecords[0].Id, Date.today().addMonths(-2));
         update importRecords;
@@ -34,7 +34,7 @@ public class Import_Cleanup_Batch_Test {
         Test.stopTest();
         
         // All import records should have been deleted
-        importRecords = [SELECT Id FROM IntServ__Import_Message__c];
+        importRecords = [SELECT Id FROM Import_Message__c];
         System.assert(importRecords.size() == 0, 'Expected 0. Actual ' + importRecords.size());
     }
     
@@ -56,7 +56,7 @@ public class Import_Cleanup_Batch_Test {
     @IsTest
     public static void run_ScheduleBatchJob_Test(){
         // Set the created date of the import records back so they will be executed by the batch
-        List<IntServ__Import_Message__c> importRecords = [SELECT Id FROM IntServ__Import_Message__c];
+        List<Import_Message__c> importRecords = [SELECT Id FROM Import_Message__c];
         System.assert(importRecords.size() == 1, 'Expected 1. Actual ' + importRecords.size());
         Test.setCreatedDate(importRecords[0].Id, Date.today().addMonths(-2));
         update importRecords;
@@ -82,7 +82,7 @@ public class Import_Cleanup_Batch_Test {
         Test.stopTest(); 
 
         // All import records should have been deleted
-        importRecords = [SELECT Id FROM IntServ__Import_Message__c];
+        importRecords = [SELECT Id FROM Import_Message__c];
         System.assert(importRecords.size() == 0, 'Expected 0. Actual ' + importRecords.size());
     }
 }

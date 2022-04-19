@@ -123,7 +123,7 @@ public with sharing abstract class Import_Service_Base implements IAPI_Service {
                                                            WHERE Message_Source_Id__c = :importSourceId];
         // If the source id already exists then throw an error
         if (duplicateImportMessages.size() != 0){
-            throw new Import_Exceptions.RequestBody_Exception('Cannot import the message. There is alreadyy an import message for Message_Source_Id__c = ' + importSourceId);            
+            throw new Import_Exceptions.RequestBody_Exception('Cannot import the message. There is already an import message for Message_Source_Id__c = ' + importSourceId);            
         }
     }
     
@@ -132,7 +132,7 @@ public with sharing abstract class Import_Service_Base implements IAPI_Service {
 
     // Save the mapping objects in the database.
     private Database.UpsertResult[] saveObjects(List<sObject> recordsToSave, Import_Message__c importMessage){
-        
+    
         // Get all maping objects that are active and that are for the same
         // message type as the import message
         List<Mapping_Object__mdt> mappingObjects = Import_Mapping.getMappings(importMessage);

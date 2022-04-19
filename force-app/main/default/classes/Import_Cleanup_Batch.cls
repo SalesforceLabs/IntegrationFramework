@@ -4,15 +4,15 @@ public with sharing class Import_Cleanup_Batch implements Database.Batchable<sOb
     public Database.QueryLocator start(Database.BatchableContext bc) {
         return Database.getQueryLocator(
             'SELECT Id ' +
-            'FROM IntServ__Import_Message__c  ' +
+            'FROM Import_Message__c  ' +
             'WHERE CreatedDate < LAST_N_Weeks:4'
         );
     }
     
     // Delete the import messages that
-    public void execute(Database.BatchableContext bc, List<IntServ__Import_Message__c> records){
-        // If the running user is allowed to delete IntServ__Import_Message__c records
-        if (Schema.sObjectType.IntServ__Import_Message__c.isDeletable()) {
+    public void execute(Database.BatchableContext bc, List<Import_Message__c> records){
+        // If the running user is allowed to delete Import_Message__c records
+        if (Schema.sObjectType.Import_Message__c.isDeletable()) {
         	delete records;
         }
     }

@@ -4,7 +4,7 @@ public class Import_Metadata_DataFactory_Utility_Test {
     // Create an in memory custom metadata with a child relationship  
     public static Mapping_Object__mdt connectChildrenToParent(Mapping_Object__mdt parent, List<Mapping_Field__mdt> children){
         String parentJson = JSON.serialize(parent); 
-        String childrenJson = '"IntServ__Mapping_Fields__r" : {' +
+        String childrenJson = '"Mapping_Fields__r" : {' +
             '"totalSize" : ' + children.size() + ',' +
             '"done" : true,' + 
             '"records" : ' + JSON.serialize(children) +
@@ -33,7 +33,7 @@ public class Import_Metadata_DataFactory_Utility_Test {
         mappingField.Message_Payload_Node__c = messagePayloadNode;
         mappingField.Salesforce_Field__c = salesforceField;
         mappingField.Transformation_Classname__c = transformationClassName;
-        mappingField.IntServ__Is_Collection__c = isCollection;
+        mappingField.Is_Collection__c = isCollection;
         return mappingField;
     }
 }

@@ -56,7 +56,7 @@ public with sharing class Import_JSON_Service extends Import_Service_Base {
     private Object getValue(Mapping_Field__mdt fieldMapping, Object jsonValue, Schema.SObjectType targetSalesforceObjectType){
 		Object value;
         // If not a collection then transform the single field
-        if (!fieldMapping.IntServ__Is_Collection__c){
+        if (!fieldMapping.Is_Collection__c){
             // Convert the value to the correct type
             value = Import_Mapping_Utility.convertToSalesforceFieldType(targetSalesforceObjectType, fieldMapping, jsonValue);
         }
