@@ -28,6 +28,11 @@ TestType is used for unit tests</description>
                 <default>false</default>
                 <label>Test_Type</label>
             </value>
+            <value>
+                <fullName>TEST_TYPE_TEST</fullName>
+                <default>false</default>
+                <label>TEST_TYPE_TEST</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
