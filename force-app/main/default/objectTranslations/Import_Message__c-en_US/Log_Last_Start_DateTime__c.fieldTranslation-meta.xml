@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
-    <label><!-- Log Last Start DateTime --></label>
-    <name>Log_Last_Start_DateTime__c</name>
-</CustomFieldTranslation>

@@ -1,14 +1,29 @@
 {
-  "packageDirectories": [
-    {
-      "path": "force-app",
-      "default": true,
-      "package": "Integration Framework",
-      "versionName": "ver 0.1",
-      "versionNumber": "0.1.0.NEXT"
+    "namespace": "IntServ",
+    "sfdcLoginUrl": "https://login.salesforce.com",
+    "sourceApiVersion": "52.0",
+    "packageDirectories": [
+        {
+            "path": "force-app",
+            "default": true,
+            "package": "SFL Integration Framework",
+            "versionName": "V0.1",
+            "versionNumber": "0.1.0.NEXT",
+            "versionDescription": "First release",
+            "definitionFile": "config/project-scratch-def.json",
+            "releaseNotesUrl": ""
+        }
+    ],
+    "packageAliases": {
+        "SFL Integration Framework": "0Ho5Y000000wkQUSAY",
+        "SFL Integration Framework@0.1.0-1": "04t5Y000001wMBmQAM",
+        "SFL Integration Framework@0.1.0-2": "04t5Y000001wMG9QAM",
+        "SFL Integration Framework@0.1.0-3": "04t5Y000001wMGEQA2",
+        "SFL Integration Framework@0.1.0-4": "04t5Y000001wMauQAE",
+        "SFL Integration Framework@0.1.0-5": "04t5Y000001wN6VQAU",
+        "SFL Integration Framework@0.1.0-6": "04t5Y000001wN6aQAE",
+        "SFL Integration Framework@0.1.0-7": "04t5Y000001wN6fQAE",
+        "SFL Integration Framework@0.1.0-8": "04t5Y000001wN6kQAE",
+        "SFL Integration Framework@1.0.0-0": "04t5Y000001wN6uQAE"
     }
-  ],
-  "namespace": "IntServ",
-  "sfdcLoginUrl": "https://login.salesforce.com",
-  "sourceApiVersion": "50.0"
 }

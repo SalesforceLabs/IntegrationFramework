@@ -3,5 +3,5 @@
     <description>This metadata defines what URLs can be called and what class will process the request posted to that URL</description>
     <label>API Routing</label>
     <pluralLabel>API Routings</pluralLabel>
-    <visibility>Protected</visibility>
+    <visibility>Public</visibility>
 </CustomObject>

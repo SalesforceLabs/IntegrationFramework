@@ -3,5 +3,5 @@
     <description>This custom metadata contains what element in an import message will be mapped to what Salesforce object.</description>
     <label>Mapping Object</label>
     <pluralLabel>Mapping Objects</pluralLabel>
-    <visibility>Protected</visibility>
+    <visibility>Public</visibility>
 </CustomObject>
